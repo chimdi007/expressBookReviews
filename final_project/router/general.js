@@ -77,4 +77,53 @@ public_users.get('/review/:isbn',function (req, res) {
     }
 });
 
+
+// Function to fetch the list of books available in the shop
+const fetchAllBooks = async () => {
+    try {
+      const response = await axios.get('/');
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching books:', error);
+      throw error; // Optional: Throw the error to handle it elsewhere
+    }
+  };
+
+
+
+// Function to fetch a book by ISBN
+const getBookByIsbn = async (isbn) => {
+    try {
+      const response = await axios.get(`/isbn/${isbn}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching book:', error);
+      throw error; // Optional: Throw the error to handle it elsewhere
+    }
+  };
+
+
+// Function to fetch books by author
+const getBooksByAuthor = async (author) => {
+    try {
+      const response = await axios.get(`/author/${author}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching books by author:', error);
+      throw error; // Optional: Throw the error to handle it elsewhere
+    }
+  };
+
+
+// Function to fetch books by title
+const getBooksByTitle = async (title) => {
+    try {
+      const response = await axios.get(`/title/${title}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching books by title:', error);
+      throw error; // Optional: Throw the error to handle it elsewhere
+    }
+  };
+
 module.exports.general = public_users;
