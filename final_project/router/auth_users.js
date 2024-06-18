@@ -12,18 +12,17 @@ return users.some((user) => user.username === username);
 
 const authenticatedUser = (username,password)=>{ //returns boolean
 //write code to check if username and password match the one we have in records.
-const user = users.find(user => user.username === username);
-
-  // If user is found, check if the password matches
-  if (user) {
-    if (user.password === password) {
-      return true; // Authentication successful
-    } else {
-      return false; // Password does not match
-    }
-  } else {
-    return false; // User not found
+const token = req.headers['authorization'];
+  if (!token) {
+    return res.status(401).json({ message: 'Unauthorized' });
   }
+  jwt.verify(token, SECRET_KEY, (err, decoded) => {
+    if (err) {
+      return res.status(500).json({ message: 'Failed to authenticate token' });
+    }
+    req.user = decoded;
+    next();
+  });
 };
 
 //only registered users can login
